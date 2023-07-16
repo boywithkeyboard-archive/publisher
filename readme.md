@@ -3,6 +3,8 @@
 > **Note**: You need to follow Semantic Versioning and Conventional Commits if
 > you want to use this tool.
 
+![Demo](demo.png)
+
 ### Usage
 
 ```yml
