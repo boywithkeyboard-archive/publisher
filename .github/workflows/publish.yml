@@ -26,4 +26,4 @@ jobs:
       - name: Publish Release
         uses: boywithkeyboard/taco@dev
         with:
-          kind: ${{github.event.inputs.type}}
+          kind: ${{github.event.inputs.kind}}

@@ -34,7 +34,7 @@ jobs:
       - name: Publish Release
         uses: boywithkeyboard/taco@v0
         with:
-          kind: ${{github.event.inputs.type}}
+          kind: ${{github.event.inputs.kind}}
 ```
 
 ### Customization
