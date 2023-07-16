@@ -23,7 +23,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Publish Release
+      - name: Publish release
         uses: boywithkeyboard/taco@dev
         with:
           kind: ${{github.event.inputs.kind}}
+
+      - name: Bump major version
+        run: |
+          short="v0"
+          git tag $short -f
+          git push --tags -f
