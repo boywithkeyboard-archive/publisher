@@ -1,6 +1,7 @@
 ## taco
 
-> **Note**: You need to follow Semantic Versioning and Conventional Commits if you want to use this tool.
+> **Note**: You need to follow Semantic Versioning and Conventional Commits if
+> you want to use this tool.
 
 ### Usage
 
@@ -27,10 +28,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pull-requests: write
-
     steps:
       - uses: actions/checkout@v3
 
@@ -42,11 +39,10 @@ jobs:
 
 ### Customization
 
-| Name | Description | Default | Required |
-| --- | --- | --- | --- |
-| `kind` | Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`. | | Yes |
-| `draft` | Create the release as a draft. | `false` | No |
-| `prerelease` | Create the release as a prerelease. | `false` | No |
-| `include_author` | Include the author of the pull request in the release notes. | `false` | No |
-| `include_description` | Include the description of the pull request in the release notes. | `false` | No |
-| `prerelease_prefix` | Specify the prefix for prereleases, e.g. `rc`. | `canary` | No |
+| Name                  | Description                                                              | Default  | Required |
+| --------------------- | ------------------------------------------------------------------------ | -------- | -------- |
+| `kind`                | Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`. |          | Yes      |
+| `draft`               | Create the release as a draft.                                           | `false`  | No       |
+| `include_author`      | Include the author of the pull request in the release notes.             | `false`  | No       |
+| `include_description` | Include the description of the pull request in the release notes.        | `false`  | No       |
+| `prerelease_prefix`   | Specify the prefix for prereleases, e.g. `rc`.                           | `canary` | No       |

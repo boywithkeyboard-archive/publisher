@@ -4,10 +4,6 @@ inputs:
   kind:
     description: ''
     required: true
-  prerelease:
-    description: 'Create the release as a prerelease.'
-    required: false
-    default: 'false'
   draft:
     description: 'Create the release as a draft.'
     required: false
