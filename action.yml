@@ -1,0 +1,32 @@
+name: 'taco'
+description: '🌮'
+inputs:
+  kind:
+    description: ''
+    required: true
+  prerelease:
+    description: 'Create the release as a prerelease.'
+    required: false
+    default: 'false'
+  draft:
+    description: 'Create the release as a draft.'
+    required: false
+    default: 'false'
+  include_author:
+    description: 'Include the author of the pull request in the release notes.'
+    required: false
+    default: 'false'
+  include_description:
+    description: 'Include the description of the pull request in the release notes.'
+    required: false
+    default: 'false'
+  prerelease_prefix:
+    description: 'Specify the prefix for prereleases.'
+    required: false
+    default: 'canary'
+branding:
+  icon: 'arrow-up'
+  color: 'blue'
+runs:
+  using: 'node16'
+  main: 'action.js'
