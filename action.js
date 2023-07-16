@@ -10233,15 +10233,15 @@ function indentString(string, count = 1, options = {}) {
 // action.ts
 var import_semver = __toESM(require_semver2());
 async function action() {
-  const { rest } = (0, import_github.getOctokit)((0, import_core.getInput)("token"));
   const config = {
+    token: (0, import_core.getInput)("token"),
     kind: (0, import_core.getInput)("kind", { required: true }),
     draft: (0, import_core.getBooleanInput)("draft"),
-    prerelease: (0, import_core.getBooleanInput)("draft"),
-    includeAuthor: (0, import_core.getInput)("include_author"),
-    includeDescription: (0, import_core.getInput)("include_description"),
+    includeAuthor: (0, import_core.getBooleanInput)("include_author"),
+    includeDescription: (0, import_core.getBooleanInput)("include_description"),
     prereleasePrefix: (0, import_core.getInput)("prerelease_prefix")
   };
+  const { rest } = (0, import_github.getOctokit)(config.token);
   const getLatestRelease = async () => {
     try {
       const data2 = await rest.repos.listReleases({
@@ -10333,7 +10333,6 @@ async function action() {
   const year = (/* @__PURE__ */ new Date()).getUTCFullYear(), month = (/* @__PURE__ */ new Date()).getUTCMonth() + 1, day = (/* @__PURE__ */ new Date()).getUTCDate();
   let releaseBody = `### ${nextVersion} / ${year}.${month < 10 ? `0${month}` : month}.${day < 10 ? `0${day}` : day}
 `;
-  const style = (0, import_core.getInput)("style").split(", ");
   data.sort((a, b) => {
     const x = a.title.toLowerCase(), y = b.title.toLowerCase();
     if (x < y) {
@@ -10388,10 +10387,10 @@ async function action() {
     }
     releaseBody += `
 * ${linkifyReferences(title)}`;
-    if (style.includes("author")) {
+    if (config.includeAuthor) {
       releaseBody += user?.login ? ` by @${user?.login}` : "";
     }
-    if (style.includes("description") && body !== null && body.length > 0) {
+    if (config.includeDescription && body !== null && body.length > 0) {
       releaseBody += `
 
 ${indentString(body, 2)}
@@ -10404,8 +10403,8 @@ ${indentString(body, 2)}
     tag_name: nextVersion,
     name: nextVersion,
     body: releaseBody,
-    draft: (0, import_core.getBooleanInput)("draft") ?? false,
-    prerelease: config.kind.startsWith("pre") || (0, import_core.getBooleanInput)("prerelease"),
+    draft: config.draft,
+    prerelease: config.kind.startsWith("pre"),
     target_commitish: import_github.context.sha
   });
   (0, import_core.setOutput)("release_id", release.id);

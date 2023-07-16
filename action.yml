@@ -20,6 +20,10 @@ inputs:
     description: 'Specify the prefix for prereleases.'
     required: false
     default: 'canary'
+  token:
+    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT).'
+    required: false
+    default: ${{ github.token }}
 branding:
   icon: 'arrow-up'
   color: 'blue'

@@ -4,16 +4,16 @@ import indentString from 'indent-string'
 import semver from 'semver'
 
 async function action() {
-  const { rest } = getOctokit(getInput('token'))
-
   const config = {
+    token: getInput('token'),
     kind: getInput('kind', { required: true }),
     draft: getBooleanInput('draft'),
-    prerelease: getBooleanInput('draft'),
-    includeAuthor: getInput('include_author'),
-    includeDescription: getInput('include_description'),
+    includeAuthor: getBooleanInput('include_author'),
+    includeDescription: getBooleanInput('include_description'),
     prereleasePrefix: getInput('prerelease_prefix'),
   }
+
+  const { rest } = getOctokit(config.token)
 
   // const fetchChangelog = async () => {
   //   try {
@@ -143,8 +143,6 @@ async function action() {
     month < 10 ? `0${month}` : month
   }.${day < 10 ? `0${day}` : day}\n`
 
-  const style = getInput('style').split(', ')
-
   data.sort((a, b) => {
     const x = a.title.toLowerCase(),
       y = b.title.toLowerCase()
@@ -237,7 +235,7 @@ async function action() {
 
     releaseBody += `\n* ${linkifyReferences(title)}`
 
-    if (style.includes('author')) {
+    if (config.includeAuthor) {
       // changelogBody += user?.login
       //   ? ` by [@${user?.login}](https://github.com/${user?.login})`
       //   : ''
@@ -245,7 +243,7 @@ async function action() {
       releaseBody += user?.login ? ` by @${user?.login}` : ''
     }
 
-    if (style.includes('description') && body !== null && body.length > 0) {
+    if (config.includeDescription && body !== null && body.length > 0) {
       // changelogBody += `\n\n${indentString(body, 2)}\n`
       releaseBody += `\n\n${indentString(body, 2)}\n`
     }
@@ -257,8 +255,8 @@ async function action() {
     tag_name: nextVersion,
     name: nextVersion,
     body: releaseBody,
-    draft: getBooleanInput('draft') ?? false,
-    prerelease: config.kind.startsWith('pre') || getBooleanInput('prerelease'),
+    draft: config.draft,
+    prerelease: config.kind.startsWith('pre'),
     target_commitish: context.sha,
   })
 
