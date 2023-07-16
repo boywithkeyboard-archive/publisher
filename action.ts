@@ -109,10 +109,6 @@ async function action() {
     `Latest release: ${latestRelease?.tag_name} (published at ${latestRelease?.created_at})`,
   )
 
-  if (!latestRelease) {
-    throw new Error('Failed to fetch latest release.')
-  }
-
   let { data } = await rest.pulls.list({
     ...context.repo,
     per_page: 100,
@@ -167,7 +163,7 @@ async function action() {
     }
 
     if (
-      new Date(latestRelease.created_at).getTime() >=
+      latestRelease && new Date(latestRelease.created_at).getTime() >=
         new Date(merged_at).getTime()
     ) {
       continue
@@ -183,7 +179,7 @@ async function action() {
     }
 
     if (
-      c.data.commit.committer?.date &&
+      latestRelease && c.data.commit.committer?.date &&
       new Date(c.data.commit.committer?.date).getTime() <=
         new Date(latestRelease.created_at).getTime()
     ) {

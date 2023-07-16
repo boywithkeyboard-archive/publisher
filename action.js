@@ -10309,9 +10309,6 @@ async function action() {
   console.info(
     `Latest release: ${latestRelease?.tag_name} (published at ${latestRelease?.created_at})`
   );
-  if (!latestRelease) {
-    throw new Error("Failed to fetch latest release.");
-  }
   let { data } = await rest.pulls.list({
     ...import_github.context.repo,
     per_page: 100,
@@ -10347,7 +10344,7 @@ async function action() {
     if (merged_at === null || user?.type === "Bot" || merge_commit_sha === null || status !== 200) {
       continue;
     }
-    if (new Date(latestRelease.created_at).getTime() >= new Date(merged_at).getTime()) {
+    if (latestRelease && new Date(latestRelease.created_at).getTime() >= new Date(merged_at).getTime()) {
       continue;
     }
     const c = await rest.repos.getCommit({
@@ -10357,7 +10354,7 @@ async function action() {
     if (c.status !== 200) {
       continue;
     }
-    if (c.data.commit.committer?.date && new Date(c.data.commit.committer?.date).getTime() <= new Date(latestRelease.created_at).getTime()) {
+    if (latestRelease && c.data.commit.committer?.date && new Date(c.data.commit.committer?.date).getTime() <= new Date(latestRelease.created_at).getTime()) {
       continue;
     }
     const linkifyReferences = (commit) => {
