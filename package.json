@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/node": "^20.4.8",
     "@types/semver": "^7.5.0",
-    "esbuild": "^0.18.17",
+    "esbuild": "^0.18.20",
     "typescript": "^5.1.6"
   }
 }
