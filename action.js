@@ -21053,7 +21053,7 @@ async function action() {
     releaseBody += `
 * ${linkifyReferences(title)}`
     if (config.includeAuthor && user?.login) {
-      contributors.add(`@${user.login}`)
+      contributors.add(`, @${user.login}`)
       releaseBody += ` by @${user.login}`
     }
     if (config.includeDescription && body !== null && body.length > 0) {
@@ -21064,9 +21064,14 @@ ${indentString(body, 2)}
     }
   }
   if (config.mentionContributors) {
+    const arr = [...contributors.values()]
+    arr[0] = arr[0].replace(', ', '')
+    arr[arr.length - 1] = arr.length > 2
+      ? arr[arr.length - 1].replace(', ', ', & ')
+      : arr[arr.length - 1].replace(', ', ' & ')
     releaseBody += `
 
-${[...contributors.values()].join(' ')}`
+###### Contributed by ${arr.join('')}`
   }
   const { data: release } = await rest.repos.createRelease({
     owner: import_github.context.repo.owner,

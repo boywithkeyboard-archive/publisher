@@ -239,7 +239,7 @@ async function action() {
       //   ? ` by [@${user?.login}](https://github.com/${user?.login})`
       //   : ''
 
-      contributors.add(`@${user.login}`)
+      contributors.add(`, @${user.login}`)
       releaseBody += ` by @${user.login}`
     }
 
@@ -250,7 +250,14 @@ async function action() {
   }
 
   if (config.mentionContributors) {
-    releaseBody += `\n\n${[...contributors.values()].join(' ')}`
+    const arr = [...contributors.values()]
+
+    arr[0] = arr[0].replace(', ', '')
+    arr[arr.length - 1] = arr.length > 2
+      ? arr[arr.length - 1].replace(', ', ', & ')
+      : arr[arr.length - 1].replace(', ', ' & ')
+
+    releaseBody += `\n\n###### Contributed by ${arr.join('')}`
   }
 
   const { data: release } = await rest.repos.createRelease({
