@@ -41,10 +41,11 @@ jobs:
 
 ### Customization
 
-| Name                  | Description                                                              | Default  | Required |
-| --------------------- | ------------------------------------------------------------------------ | -------- | -------- |
-| `kind`                | Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`. |          | Yes      |
-| `draft`               | Create the release as a draft.                                           | `false`  | No       |
-| `include_author`      | Include the author of the pull request in the release notes.             | `false`  | No       |
-| `include_description` | Include the description of the pull request in the release notes.        | `false`  | No       |
-| `prerelease_prefix`   | Specify the prefix for prereleases, e.g. `rc`.                           | `canary` | No       |
+| Name                   | Description                                                              | Default  | Required |
+| ---------------------- | ------------------------------------------------------------------------ | -------- | -------- |
+| `kind`                 | Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`. |          | Yes      |
+| `draft`                | Create the release as a draft.                                           | `false`  | No       |
+| `include_author`       | Include the author of the pull request in the release notes.             | `false`  | No       |
+| `include_description`  | Include the description of the pull request in the release notes.        | `false`  | No       |
+| `prerelease_prefix`    | Specify the prefix for prereleases, e.g. `rc`.                           | `canary` | No       |
+| `mention_contributors` | Mention all contributors in the footer of the release notes.             | `false`  | No       |
