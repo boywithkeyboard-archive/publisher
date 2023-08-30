@@ -11,6 +11,7 @@ async function action() {
     includeAuthor: getBooleanInput('include_author'),
     includeDescription: getBooleanInput('include_description'),
     prereleasePrefix: getInput('prerelease_prefix'),
+    mentionContributors: getBooleanInput('mention_contributors'),
   }
 
   const { rest } = getOctokit(config.token)
@@ -154,6 +155,8 @@ async function action() {
     return 0
   })
 
+  const contributors = new Set<string>()
+
   for (const { user, merged_at, number, body, merge_commit_sha } of data) {
     if (
       merged_at === null || user?.type === 'Bot' || merge_commit_sha === null ||
@@ -231,18 +234,23 @@ async function action() {
 
     releaseBody += `\n* ${linkifyReferences(title)}`
 
-    if (config.includeAuthor) {
+    if (config.includeAuthor && user?.login) {
       // changelogBody += user?.login
       //   ? ` by [@${user?.login}](https://github.com/${user?.login})`
       //   : ''
 
-      releaseBody += user?.login ? ` by @${user?.login}` : ''
+      contributors.add(`@${user.login}`)
+      releaseBody += ` by @${user.login}`
     }
 
     if (config.includeDescription && body !== null && body.length > 0) {
       // changelogBody += `\n\n${indentString(body, 2)}\n`
       releaseBody += `\n\n${indentString(body, 2)}\n`
     }
+  }
+
+  if (config.mentionContributors) {
+    releaseBody += `\n\n${[...contributors.values()].join(' ')}`
   }
 
   const { data: release } = await rest.repos.createRelease({

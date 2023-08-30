@@ -24,6 +24,10 @@ inputs:
     description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT).'
     required: false
     default: ${{ github.token }}
+  mention_contributors:
+    description: 'Mention all contributors in the footer of the release notes.'
+    required: false
+    default: 'false'
 branding:
   icon: 'arrow-up'
   color: 'blue'
