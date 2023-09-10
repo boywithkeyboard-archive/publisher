@@ -4,6 +4,13 @@
 
 ![Demo](https://raw.githubusercontent.com/boywithkeyboard/taco/dev/.github/demo.png)
 
+## Usage
+
+> **Warning**\
+> You need to follow [Semantic Versioning](https://semver.org) and
+> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
+> this tool.
+
 ```yml
 name: publish
 
@@ -35,11 +42,6 @@ jobs:
         with:
           kind: ${{github.event.inputs.kind}}
 ```
-
-> **Warning**\
-> You need to follow [Semantic Versioning](https://semver.org) and
-> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
-> this tool.
 
 - `kind`
 
