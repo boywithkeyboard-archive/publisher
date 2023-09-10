@@ -212,7 +212,7 @@ async function action() {
     }
 
     const i = c.data.commit.message.indexOf(')\n\n')
-    const title = c.data.commit.message.substring(0, i > 0 ? i + 1 : undefined)
+    let title = c.data.commit.message.substring(0, i > 0 ? i + 1 : undefined)
 
     const comments = (await rest.issues.listComments({
       ...context.repo,
@@ -230,9 +230,12 @@ async function action() {
       continue
     }
 
+    title = linkifyReferences(title)
+    title = title.replace(': ', ': **').replace(' ([#', '** ([#')
+
     // changelogBody += `\n* ${linkifyReferences(title)}`
 
-    releaseBody += `\n* ${linkifyReferences(title)}`
+    releaseBody += `\n* ${title}`
 
     if (config.includeAuthor && user?.login) {
       // changelogBody += user?.login
@@ -257,7 +260,7 @@ async function action() {
       ? arr[arr.length - 1].replace(', ', ', & ')
       : arr[arr.length - 1].replace(', ', ' & ')
 
-    releaseBody += `\n\n###### Contributed by ${arr.join('')}`
+    releaseBody += `\n\nContributed by ${arr.join('')}`
   }
 
   const { data: release } = await rest.repos.createRelease({
