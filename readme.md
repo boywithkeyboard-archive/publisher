@@ -4,11 +4,6 @@
 
 ![Demo](https://raw.githubusercontent.com/boywithkeyboard/taco/dev/.github/demo.png)
 
-> **Warning**\
-> You need to follow [Semantic Versioning](https://semver.org) and
-> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
-> this tool.
-
 ```yml
 name: publish
 
@@ -41,15 +36,26 @@ jobs:
           kind: ${{github.event.inputs.kind}}
 ```
 
+> **Warning**\
+> You need to follow [Semantic Versioning](https://semver.org) and
+> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
+> this tool.
+
 - `kind`
+
   Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`.
-- `draft` *(defaults to `false`)*
+- `draft` _(defaults to `false`)_
+
   Create the release as a draft.
-- `include_author` *(defaults to `false`)*
+- `include_author` _(defaults to `false`)_
+
   Include the author of the pull request in the release notes.
-- `include_description` *(defaults to `false`)*
+- `include_description` _(defaults to `false`)_
+
   Include the description of the pull request in the release notes.
-- `prerelease_prefix` *(defaults to `canary`)*
+- `prerelease_prefix` _(defaults to `canary`)_
+
   Specify the prefix for prereleases, e.g. `rc`.
-- `mention_contributors` *(defaults to `false`)*
+- `mention_contributors` _(defaults to `false`)_
+
   Mention all contributors in the footer of the release notes.
