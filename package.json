@@ -2,7 +2,7 @@
   "name": "taco",
   "private": true,
   "scripts": {
-    "build": "esbuild action.ts --bundle --format=cjs --platform=node --legal-comments=none --outfile=action.js && deno fmt action.ts --no-semicolons --single-quote && npm run fmt",
+    "build": "esbuild action.ts --bundle --format=cjs --platform=node --legal-comments=none --outfile=action.js && npm run fmt",
     "fmt": "deno fmt action.ts action.js --single-quote --no-semicolons"
   },
   "dependencies": {
