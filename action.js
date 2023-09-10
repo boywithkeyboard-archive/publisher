@@ -20950,7 +20950,7 @@ async function action() {
     throw new Error('Invalid kind.')
   }
   console.info(
-    `Latest release: ${latestRelease?.tag_name} (published at ${latestRelease?.created_at})`,
+    `previous release - ${latestRelease?.tag_name} (${latestRelease?.created_at})`,
   )
   let { data } = await rest.pulls.list({
     ...import_github.context.repo,
