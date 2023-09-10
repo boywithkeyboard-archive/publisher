@@ -3,7 +3,7 @@
 > **Note**: You need to follow Semantic Versioning and Conventional Commits if
 > you want to use this tool.
 
-![Demo](demo.png)
+![Demo](https://raw.githubusercontent.com/boywithkeyboard/taco/dev/.github/demo.png)
 
 ### Usage
 
