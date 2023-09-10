@@ -1,12 +1,13 @@
-## taco
+<div align='center'>
+  <h1>taco</h1>
+</div>
 
 ![Demo](https://raw.githubusercontent.com/boywithkeyboard/taco/dev/.github/demo.png)
 
 > **Warning**\
-> You need to follow Semantic Versioning and Conventional Commits if you want to
-> use this tool.
-
-### Usage
+> You need to follow [Semantic Versioning](https://semver.org) and
+> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
+> this tool.
 
 ```yml
 name: publish
@@ -40,13 +41,15 @@ jobs:
           kind: ${{github.event.inputs.kind}}
 ```
 
-### Customization
-
-| Name                   | Description                                                              | Default  | Required |
-| ---------------------- | ------------------------------------------------------------------------ | -------- | -------- |
-| `kind`                 | Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`. |          | Yes      |
-| `draft`                | Create the release as a draft.                                           | `false`  | No       |
-| `include_author`       | Include the author of the pull request in the release notes.             | `false`  | No       |
-| `include_description`  | Include the description of the pull request in the release notes.        | `false`  | No       |
-| `prerelease_prefix`    | Specify the prefix for prereleases, e.g. `rc`.                           | `canary` | No       |
-| `mention_contributors` | Mention all contributors in the footer of the release notes.             | `false`  | No       |
+- `kind`
+  Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`.
+- `draft` *(defaults to `false`)*
+  Create the release as a draft.
+- `include_author` *(defaults to `false`)*
+  Include the author of the pull request in the release notes.
+- `include_description` *(defaults to `false`)*
+  Include the description of the pull request in the release notes.
+- `prerelease_prefix` *(defaults to `canary`)*
+  Specify the prefix for prereleases, e.g. `rc`.
+- `mention_contributors` *(defaults to `false`)*
+  Mention all contributors in the footer of the release notes.
