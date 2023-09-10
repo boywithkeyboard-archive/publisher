@@ -21034,7 +21034,7 @@ async function action() {
       return commit
     }
     const i = c.data.commit.message.indexOf(')\n\n')
-    const title = c.data.commit.message.substring(0, i > 0 ? i + 1 : void 0)
+    let title = c.data.commit.message.substring(0, i > 0 ? i + 1 : void 0)
     const comments = (await rest.issues.listComments({
       ...import_github.context.repo,
       issue_number: number,
@@ -21050,8 +21050,10 @@ async function action() {
     ) {
       continue
     }
+    title = linkifyReferences(title)
+    title = title.replace(': ', ': **').replace(' ([#', '** ([#')
     releaseBody += `
-* ${linkifyReferences(title)}`
+* ${title}`
     if (config.includeAuthor && user?.login) {
       contributors.add(`, @${user.login}`)
       releaseBody += ` by @${user.login}`
@@ -21071,7 +21073,7 @@ ${indentString(body, 2)}
       : arr[arr.length - 1].replace(', ', ' & ')
     releaseBody += `
 
-###### Contributed by ${arr.join('')}`
+Contributed by ${arr.join('')}`
   }
   const { data: release } = await rest.repos.createRelease({
     owner: import_github.context.repo.owner,
