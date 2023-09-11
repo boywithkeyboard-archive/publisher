@@ -30,6 +30,6 @@ jobs:
 
       - name: Bump major version
         run: |
-          short="v0"
+          short="v1"
           git tag $short -f
           git push --tags -f
