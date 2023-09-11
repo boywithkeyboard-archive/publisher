@@ -20879,23 +20879,24 @@ async function action() {
     ),
   }
   const { rest } = (0, import_github.getOctokit)(config.token)
-  const getLatestRelease = async () => {
-    try {
-      const data2 = await rest.repos.listReleases({
-        ...import_github.context.repo,
-      })
-      data2.data[0].tag_name
-      return {
-        data: data2.data[0],
-        status: data2.status,
-      }
-    } catch (err) {
-      return {
-        status: 404,
-      }
-    }
+  const d = /* @__PURE__ */ new Date()
+  d.setDate(d.getDate() - 365)
+  let latestRelease = {
+    tag_name: 'v0.0.0',
+    created_at: d.toString(),
   }
-  const { data: latestRelease, status } = await getLatestRelease()
+  try {
+    const result = await rest.repos.listReleases({
+      ...import_github.context.repo,
+    })
+    if (
+      result.status === 200 && result.data instanceof Array &&
+      result.data.length > 0
+    ) {
+      latestRelease = result.data[0]
+    }
+  } catch (err) {
+  }
   let currentVersion = latestRelease?.tag_name ?? 'v0.0.0'
   let nextVersion = 'v'
   if (config.kind === 'prepatch') {
@@ -20990,8 +20991,7 @@ async function action() {
   const contributors = /* @__PURE__ */ new Set()
   for (const { user, merged_at, number, body, merge_commit_sha } of data) {
     if (
-      merged_at === null || user?.type === 'Bot' || merge_commit_sha === null ||
-      status !== 200
+      merged_at === null || user?.type === 'Bot' || merge_commit_sha === null
     ) {
       continue
     }

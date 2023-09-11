@@ -30,26 +30,31 @@ async function action() {
   //   }
   // }
 
-  const getLatestRelease = async () => {
-    try {
-      const data = await rest.repos.listReleases({
-        ...context.repo,
-      })
+  const d = new Date()
 
-      data.data[0].tag_name
+  d.setDate(d.getDate() - 365)
 
-      return {
-        data: data.data[0],
-        status: data.status,
-      }
-    } catch (err) {
-      return {
-        status: 404,
-      }
-    }
+  let latestRelease: {
+    tag_name: string
+    created_at: string
+    [key: string]: unknown
+  } = {
+    tag_name: 'v0.0.0',
+    created_at: d.toString(),
   }
 
-  const { data: latestRelease, status } = await getLatestRelease()
+  try {
+    const result = await rest.repos.listReleases({
+      ...context.repo,
+    })
+
+    if (
+      result.status === 200 && result.data instanceof Array &&
+      result.data.length > 0
+    ) {
+      latestRelease = result.data[0]
+    }
+  } catch (err) {}
 
   let currentVersion = latestRelease?.tag_name ?? 'v0.0.0'
   let nextVersion = 'v'
@@ -159,8 +164,7 @@ async function action() {
 
   for (const { user, merged_at, number, body, merge_commit_sha } of data) {
     if (
-      merged_at === null || user?.type === 'Bot' || merge_commit_sha === null ||
-      status !== 200
+      merged_at === null || user?.type === 'Bot' || merge_commit_sha === null
     ) {
       continue
     }
