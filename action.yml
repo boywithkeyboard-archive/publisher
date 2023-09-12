@@ -1,5 +1,5 @@
-name: 'taco'
-description: '🌮'
+name: "boywithkeyboard's taco"
+description: 'A opinionated production-grade release manager. 🌮'
 inputs:
   kind:
     description: ''
