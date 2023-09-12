@@ -25,7 +25,7 @@ jobs:
 
       - id: publish
         name: Publish release
-        uses: boywithkeyboard/publisher@v1
+        uses: boywithkeyboard/publisher@dev
         with:
           kind: ${{github.event.inputs.kind}}
 
