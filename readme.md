@@ -1,8 +1,8 @@
 <div align='center'>
-  <h1>taco</h1>
+  <h1>publisher</h1>
 </div>
 
-![Demo](https://raw.githubusercontent.com/boywithkeyboard/taco/dev/.github/demo.png)
+![Demo](https://raw.githubusercontent.com/boywithkeyboard/publisher/dev/.github/demo.png)
 
 ## Usage
 
@@ -37,8 +37,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Publish Release
-        uses: boywithkeyboard/taco@v1
+      - name: Publish release
+        uses: boywithkeyboard/publisher@v1
         with:
           kind: ${{github.event.inputs.kind}}
 ```
