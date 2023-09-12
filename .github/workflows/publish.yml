@@ -23,13 +23,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Publish release
-        uses: boywithkeyboard/taco@dev
+      - id: publish
+        name: Publish release
+        uses: boywithkeyboard/publisher@v1
         with:
           kind: ${{github.event.inputs.kind}}
 
       - name: Bump major version
         run: |
-          short="v1"
+          full="${{ steps.publish.outputs.tag_name }}"
+          short="${full:0:2}"
           git tag $short -f
           git push --tags -f

@@ -1,5 +1,5 @@
-name: "boywithkeyboard's taco"
-description: 'A opinionated production-grade release manager. 🌮'
+name: "boywithkeyboard's publisher"
+description: 'A opinionated production-grade release manager.'
 inputs:
   kind:
     description: ''
@@ -30,7 +30,7 @@ inputs:
     default: 'false'
 branding:
   icon: 'arrow-up'
-  color: 'blue'
+  color: 'gray-dark'
 runs:
   using: 'node20'
-  main: 'action.js'
+  main: 'src/action.js'
