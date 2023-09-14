@@ -6,7 +6,7 @@
 
 ## Usage
 
-> **Warning**\
+> [!IMPORTANT]\
 > You need to follow [Semantic Versioning](https://semver.org) and
 > [Conventional Commits](https://www.conventionalcommits.org) if you want to use
 > this tool.
