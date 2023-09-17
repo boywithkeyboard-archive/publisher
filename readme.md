@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Publish release
-        uses: boywithkeyboard/publisher@v1
+        uses: boywithkeyboard/publisher@v2
         with:
           kind: ${{github.event.inputs.kind}}
 ```
