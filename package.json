@@ -6,7 +6,7 @@
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
-    "@types/node": "^20.8.10",
+    "@types/node": "^20.9.1",
     "@types/semver": "^7.5.5",
     "esbuild": "^0.19.5",
     "indent-string": "^5.0.0",
