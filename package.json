@@ -11,6 +11,6 @@
     "esbuild": "^0.19.5",
     "indent-string": "^5.0.0",
     "semver": "^7.5.4",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   }
 }
