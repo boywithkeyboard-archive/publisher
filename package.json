@@ -1,17 +1,15 @@
 {
-  "name": "publisher",
+  "name": "@boywithkeyboard/publisher",
+  "private": true,
   "scripts": {
-    "build": "esbuild src/action.ts --bundle --format=cjs --platform=node --legal-comments=none --outfile=src/action.js"
+    "build": "esbuild src/index.ts --bundle --format=cjs --platform=node --legal-comments=none --outfile=build/index.js"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
-    "@actions/github": "^6.0.0",
-    "indent-string": "^5.0.0",
-    "semver": "^7.6.0"
+    "@actions/github": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.28",
-    "@types/semver": "^7.5.8",
     "esbuild": "^0.20.2",
     "typescript": "^5.4.2"
   }
