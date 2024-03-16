@@ -1,4 +1,4 @@
-## publisher
+### Usage
 
 1. Make sure you have a `changelog.md` or `CHANGELOG.md` file in the root directory of your repository that is similar to this one:
 
