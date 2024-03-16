@@ -1,20 +1,9 @@
 name: publish
 
 on:
-  workflow_dispatch:
-    inputs:
-      kind:
-        description: 'Kind of release'
-        default: 'minor'
-        type: choice
-        options:
-        - prepatch
-        - patch
-        - preminor
-        - minor
-        - premajor
-        - major
-        required: true
+  push:
+    tags:
+      - v*
 
 jobs:
   publish:
@@ -24,12 +13,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: publish
-        name: Publish release
+        name: Publish Release
         uses: boywithkeyboard/publisher@main
-        with:
-          kind: ${{github.event.inputs.kind}}
 
-      - name: Bump major version
+      - name: Bump Major Version
         run: |
           full="${{ steps.publish.outputs.tag_name }}"
           short="${full:0:2}"
