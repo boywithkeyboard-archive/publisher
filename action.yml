@@ -1,36 +1,25 @@
 name: "boywithkeyboard's publisher"
-description: 'A opinionated production-grade release manager.'
+description: "An opinionated, production-ready release manager."
 inputs:
-  kind:
-    description: ''
-    required: true
+  tag:
+    description: "The GitHub access token to use for creating a new release."
+    required: false
+    default: "<tag>"
   draft:
-    description: 'Create the release as a draft.'
+    description: "Create the new release as a draft."
     required: false
-    default: 'false'
-  include_author:
-    description: 'Include the author of the pull request in the release notes.'
+    default: "false"
+  prerelease:
+    description: "Create the new release as a pre-release."
     required: false
-    default: 'false'
-  include_description:
-    description: 'Include the description of the pull request in the release notes.'
-    required: false
-    default: 'false'
-  prerelease_prefix:
-    description: 'Specify the prefix for prereleases.'
-    required: false
-    default: 'canary'
+    default: "false"
   token:
-    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT).'
+    description: "The access token to use for creating the new release."
     required: false
-    default: ${{ github.token }}
-  mention_contributors:
-    description: 'Mention all contributors in the footer of the release notes.'
-    required: false
-    default: 'false'
+    default: "${{ github.token }}"
 branding:
-  icon: 'arrow-up'
-  color: 'gray-dark'
+  icon: "tag"
+  color: "gray-dark"
 runs:
-  using: 'node20'
-  main: 'src/action.js'
+  using: "node20"
+  main: "build/index.js"
