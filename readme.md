@@ -1,63 +1,54 @@
-<div align='center'>
-  <h1>publisher</h1>
-</div>
+## publisher
 
-![Demo](https://raw.githubusercontent.com/boywithkeyboard/publisher/dev/.github/demo.png)
+1. Make sure you have a `changelog.md` or `CHANGELOG.md` file in the root directory of your repository that is similar to this one:
 
-## Usage
+    ```
+    ## [v1.1.0](https://github.com/user/repository/releases/tag/v1.1.0)
 
-> [!IMPORTANT]\
-> You need to follow [Semantic Versioning](https://semver.org) and
-> [Conventional Commits](https://www.conventionalcommits.org) if you want to use
-> this tool.
+    Some release notes.
 
-```yml
-name: publish
+    ## [v1.0.0](https://github.com/user/repository/releases/tag/v1.0.0)
 
-on:
-  workflow_dispatch:
-    inputs:
-      kind:
-        description: 'Kind of release'
-        default: 'minor'
-        type: choice
-        options:
-        - prepatch
-        - patch
-        - preminor
-        - minor
-        - premajor
-        - major
-        required: true
+    Some more release notes.
+    ```
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
+2. Create a new workflow file with the following content:
 
-    steps:
-      - uses: actions/checkout@v4
+    ```yml
+    name: publish
 
-      - name: Publish release
-        uses: boywithkeyboard/publisher@v2
-        with:
-          kind: ${{github.event.inputs.kind}}
-```
+    on:
+      push:
+        tags:
+          - v*
 
-- `kind`
+    jobs:
+      publish:
+        runs-on: ubuntu-latest
 
-  Any of `prepatch`, `patch`, `preminor`, `minor`, `premajor`, or `major`.
-- `draft` _(defaults to `false`)_
+        steps:
+          - uses: actions/checkout@v4
 
-  Create the release as a draft.
-- `include_author` _(defaults to `false`)_
+          - name: Publish Release
+            uses: boywithkeyboard/publisher@v3
+    ```
 
-  Include the author of the pull request in the release notes.
-- `include_description` _(defaults to `false`)_
+3. To trigger the workflow, simply push a new tag.
 
-  Include the description of the pull request in the release notes.
-- `prerelease_prefix` _(defaults to `canary`)_
+### Configuration
 
-  Specify the prefix for prereleases, e.g. `rc`.
-- `mention_contributors` _(defaults to `false`)_
+- `tag` _(`context.ref` by default)_
 
-  Mention all contributors in the footer of the release notes.
+  The tag name for the new release.
+
+- `draft` _(`false` by default)_
+
+  Create the new release as a draft.
+
+- `prerelease` _(`false` by default)_
+
+  Create the new release as a pre-release.
+
+- `token` _(`$GITHUB_TOKEN` by default)_
+
+  The access token to use for creating the new release.
