@@ -1,9 +1,0 @@
-{
-  "fmt": {
-    "semiColons": false,
-    "singleQuote": true,
-    "exclude": [
-      "node_modules"
-    ]
-  }
-}
