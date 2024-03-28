@@ -1,4 +1,4 @@
-name: "boywithkeyboard's publisher"
+name: "boywithkeyboard/publisher"
 description: "An opinionated, production-ready release manager."
 inputs:
   tag:
