@@ -1,7 +1,7 @@
-import { context, getOctokit } from '@actions/github'
-import { config } from './config'
-import { existsSync, readFileSync } from 'node:fs'
 import { setOutput } from '@actions/core'
+import { context, getOctokit } from '@actions/github'
+import { existsSync, readFileSync } from 'node:fs'
+import { config } from './config'
 
 export async function action() {
   const { rest } = getOctokit(config().token)
@@ -28,15 +28,21 @@ export async function action() {
     throw new Error('No changelog found.')
   }
 
-  let changelog = readFileSync(changelogPath, { encoding: 'utf-8' })
+  let changelog = readFileSync('./changelog.md', { encoding: 'utf-8' })
 
-  const startIndex = changelog.indexOf(`## [${tag}]`) + `## [${tag}](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/${tag})\n\n`.length
+  let startIndex = changelog.indexOf(`## [${tag}]`)
 
-  changelog = changelog.substring(startIndex)
+  if (startIndex < 0) {
+    changelog = ''
+  } else {
+    startIndex = startIndex + `## [${tag}](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/${tag})\n\n`.length
 
-  const endIndex = changelog.indexOf('\n\n## [')
+    changelog = changelog.substring(startIndex)
 
-  changelog = changelog.substring(0, endIndex < 0 ? undefined : endIndex)
+    const endIndex = changelog.indexOf('\n\n## [')
+
+    changelog = changelog.substring(0, endIndex < 0 ? undefined : endIndex)
+  }
 
   const { data } = await rest.repos.createRelease({
     owner: context.repo.owner,
