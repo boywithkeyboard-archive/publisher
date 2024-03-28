@@ -22194,7 +22194,9 @@ var require_github = __commonJS({
 var import_core3 = __toESM(require_core());
 
 // src/action.ts
+var import_core2 = __toESM(require_core());
 var import_github = __toESM(require_github());
+var import_node_fs = require("node:fs");
 
 // src/config.ts
 var import_core = __toESM(require_core());
@@ -22213,8 +22215,6 @@ function config() {
 }
 
 // src/action.ts
-var import_node_fs = require("node:fs");
-var import_core2 = __toESM(require_core());
 async function action() {
   const { rest } = (0, import_github.getOctokit)(config().token);
   let tag = config().tag;
@@ -22233,13 +22233,18 @@ async function action() {
   if (!changelogPath) {
     throw new Error("No changelog found.");
   }
-  let changelog = (0, import_node_fs.readFileSync)(changelogPath, { encoding: "utf-8" });
-  const startIndex = changelog.indexOf(`## [${tag}]`) + `## [${tag}](https://github.com/${import_github.context.repo.owner}/${import_github.context.repo.repo}/releases/tag/${tag})
+  let changelog = (0, import_node_fs.readFileSync)("./changelog.md", { encoding: "utf-8" });
+  let startIndex = changelog.indexOf(`## [${tag}]`);
+  if (startIndex < 0) {
+    changelog = "";
+  } else {
+    startIndex = startIndex + `## [${tag}](https://github.com/${import_github.context.repo.owner}/${import_github.context.repo.repo}/releases/tag/${tag})
 
 `.length;
-  changelog = changelog.substring(startIndex);
-  const endIndex = changelog.indexOf("\n\n## [");
-  changelog = changelog.substring(0, endIndex < 0 ? void 0 : endIndex);
+    changelog = changelog.substring(startIndex);
+    const endIndex = changelog.indexOf("\n\n## [");
+    changelog = changelog.substring(0, endIndex < 0 ? void 0 : endIndex);
+  }
   const { data } = await rest.repos.createRelease({
     owner: import_github.context.repo.owner,
     repo: import_github.context.repo.repo,
